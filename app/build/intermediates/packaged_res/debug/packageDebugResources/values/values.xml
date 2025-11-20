@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="bottom_sheet_bg">#767575</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="access_to_the_camera_is_required_to_capture_intruders">
+    Access to the camera is required to capture intruders.
+</string>
+    <string name="allow_camera_access">Allow Camera Access</string>
+    <string name="allow_usage_access">Allow Usage Access</string>
+    <string name="app_name">WatchMyPhone</string>
+    <string name="camera">Camera</string>
+    <string name="camera_permission">Camera Permission</string>
+    <string name="camera_required">Camera — required</string>
+    <string name="camera_required_for_intruder_capture">
+    Needed to take photos when someone tries to unlock your phone without permission.
+</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="essential_permissions">Essential Permissions</string>
+    <string name="helps_show_alerts_when_issues_occur">Helps show alerts when issues occur.</string>
+    <string name="notifications">Notifications</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="on_off_image">ON OFF Image</string>
+    <string name="open_notification_settings">Open Notification Settings</string>
+    <string name="optional_permissions">Optional permissions</string>
+    <string name="someone_tried_to_unlock_your_phone">Someone tried to unlock your phone</string>
+    <string name="the_app_will_show_important_notifications_when_problems_occur_or_when_certain_user_actions_are_required">The app will show important notifications when problems occur or when certain user actions are required.</string>
+    <string name="these_permissions_are_optional_but_improve_the_app_experience">These permissions are optional but improve the app experience.</string>
+    <string name="these_permissions_are_optional_but_improve_the_experience">These permissions are optional but improve the experience:</string>
+    <string name="toggle_button">Toggle Button</string>
+    <string name="usage_access">Usage Access</string>
+    <string name="usage_access_is_required_so_the_app_can_get_a_list_of_the_apps_that_the_user_has_launched">Usage access is required so the app can get a list of the apps that the user has launched.</string>
+    <style name="Base.Theme.WatchMyPhone" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="Theme.WatchMyPhone" parent="Base.Theme.WatchMyPhone"/>
+</resources>

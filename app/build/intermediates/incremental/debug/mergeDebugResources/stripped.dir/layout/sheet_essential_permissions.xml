@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/essential_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/essential_permissions"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/access_to_the_camera_is_required_to_capture_intruders"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Camera permission row with switch -->
+    <LinearLayout
+        android:id="@+id/row_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="4dp"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:text="@string/camera_permission"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvCameraPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_required_for_intruder_capture"
+                android:textSize="13sp"
+                android:textColor="?android:attr/textColorSecondary" />
+        </LinearLayout>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:useMaterialThemeColors="true" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/close"
+        android:textColor="@color/black"
+        android:background="@drawable/round_button_bg"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="8dp" />
+</LinearLayout>
