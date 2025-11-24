@@ -1,0 +1,81 @@
+# Gradle files
+.gradle/
+build/
+**/build/
+!gradle-wrapper.jar
+
+# Gradle caches
+gradle-app.setting
+
+# Local configuration
+local.properties
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files (IMPORTANT)
+*.jks
+*.keystore
+key.properties
+
+# Logs
+*.log
+
+# Android specific
+captures/
+output.json
+
+# Generated files
+**/generated/
+bin/
+gen/
+
+# NDK
+obj/
+
+# External native build
+.externalNativeBuild/
+
+# Signing
+signing.properties
+
+# Google Services
+app/google-services.json
+app/src/**/google-services.json
+
+# Firebase Crashlytics
+crashlytics-build.properties
+
+# APK / AAB files
+*.apk
+*.ap_
+*.aab
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kotlin specific
+*.kotlin_module
+
+# Jetpack Compose previews
+previews.xml
+
+# Lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Gradle local build
+.gradle/
