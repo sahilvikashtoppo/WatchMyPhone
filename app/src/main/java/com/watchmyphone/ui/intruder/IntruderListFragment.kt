@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.watchmyphone.R
+import com.watchmyphone.databinding.BottomDeleteConfirmationBinding
 import com.watchmyphone.databinding.FragmentIntruderListBinding
 import com.watchmyphone.service.MonitorService
 import com.watchmyphone.ui.permissions.EssentialPermissionsSheet
@@ -101,20 +102,6 @@ class IntruderListFragment : Fragment() {
         }
 
     }
-
-/*    private fun setupRecycler() {
-        adapter = IntruderAdapter { item ->
-            parentFragmentManager.beginTransaction()
-                .replace(
-                    R.id.container,
-                    IntruderDetailFragment.newInstance(item.imagePath, item.timestamp)
-                )
-                .addToBackStack(null)
-                .commit()
-        }
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.adapter = adapter
-    }*/
 
     private fun setupRecycler() {
         adapter = IntruderAdapter(
@@ -237,13 +224,34 @@ class IntruderListFragment : Fragment() {
         }
 
         binding.btnDelete.setOnClickListener {
+            showDeleteConfirmationSheet()
+        }
+    }
+
+    private fun showDeleteConfirmationSheet() {
+        val bottomSheet = com.google.android.material.bottomsheet.BottomSheetDialog(requireContext())
+
+        val bindingSheet = BottomDeleteConfirmationBinding.inflate(layoutInflater)
+        bottomSheet.setContentView(bindingSheet.root)
+
+        bindingSheet.btnCancel.setOnClickListener {
+            bottomSheet.dismiss()
+        }
+
+        bindingSheet.btnOk.setOnClickListener {
             val ids = adapter.getSelectedIds()
+
             lifecycleScope.launch {
                 ids.forEach { intruderViewModel.delete(it) }
             }
+
             adapter.clearSelection()
+            bottomSheet.dismiss()
         }
+
+        bottomSheet.show()
     }
+
 
 
 
