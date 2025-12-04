@@ -10,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
@@ -20,8 +19,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDb(@ApplicationContext ctx: Context): AppDatabase {
-        return Room.databaseBuilder(ctx, AppDatabase::class.java, "watch_db").build()
+        return Room.databaseBuilder(ctx, AppDatabase::class.java, "watch_db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
+
 
     @Provides
     @Singleton
@@ -29,6 +31,10 @@ object AppModule {
 
     @Provides
     fun provideIntruderDao(db: AppDatabase) = db.intruderDao()
+
+    @Provides
+    fun provideAppUsageDao(db: AppDatabase) = db.appUsageDao()
+
 
     @Provides
     @Singleton

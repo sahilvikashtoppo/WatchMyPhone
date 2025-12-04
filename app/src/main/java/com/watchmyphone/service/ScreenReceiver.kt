@@ -20,6 +20,12 @@ class ScreenReceiver : BroadcastReceiver() {
                 serviceIntent.action = MonitorService.ACTION_USER_PRESENT
                 ContextCompat.startForegroundService(context, serviceIntent)
             }
+
+            Intent.ACTION_SCREEN_OFF -> {
+                Log.d("ScreenReceiver", "ACTION_SCREEN_OFF")
+                serviceIntent.action = MonitorService.ACTION_SCREEN_OFF
+                ContextCompat.startForegroundService(context, serviceIntent)
+            }
         }
     }
 }

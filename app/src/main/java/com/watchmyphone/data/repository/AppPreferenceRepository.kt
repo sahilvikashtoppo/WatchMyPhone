@@ -1,7 +1,7 @@
 package com.watchmyphone.data.repository
 
 import android.content.Context
-import com.watchmyphone.data.local.AppPreferences
+import com.watchmyphone.data.local.datastore.AppPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

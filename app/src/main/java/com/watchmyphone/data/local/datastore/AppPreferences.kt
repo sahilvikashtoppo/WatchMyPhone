@@ -1,4 +1,4 @@
-package com.watchmyphone.data.local
+package com.watchmyphone.data.local.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

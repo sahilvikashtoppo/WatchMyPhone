@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/black">
 
+    <!-- Back button area (already in your design) -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_back"
+        android:paddingVertical="4dp"
+        app:tint="@android:color/white" />
+
+    <!-- Intruder Image -->
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/round_image_bg" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUsage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+
+    <!-- Event text -->
     <TextView
         android:id="@+id/tvEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:padding="16dp"
-        android:textColor="#FFF" />
+        android:text="@string/device_unlocked"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp" />
 
-</FrameLayout>
+    <!-- Divider -->
+    <View
+        android:id="@+id/dividerUsage"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#332244"
+        android:layout_marginVertical="20dp" />
+
+    <!-- SWITCH BLOCK -->
+    <LinearLayout
+        android:id="@+id/layoutSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvSwitchLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_which_apps_have_been_used"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_marginEnd="12dp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchUsage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Text shown after permission granted -->
+    <TextView
+        android:id="@+id/tvUsageInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/used_apps_will_be_shown_after_the_screen_turns_off"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:visibility="gone" />
+
+</LinearLayout>

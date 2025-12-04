@@ -17,12 +17,15 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.watchmyphone.R
+import com.watchmyphone.data.repository.AppUsageRepository
 import com.watchmyphone.data.repository.IntruderRepository
 import com.watchmyphone.util.Camera2Helper
+import com.watchmyphone.util.UsageStatsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -38,6 +41,7 @@ class MonitorService : LifecycleService() {
         const val ACTION_STOP_MONITORING = "com.watchmyphone.STOP_MONITORING"
         const val ACTION_CAPTURE = "com.watchmyphone.ACTION_CAPTURE"
         const val ACTION_USER_PRESENT = "com.watchmyphone.ACTION_USER_PRESENT"
+        const val ACTION_SCREEN_OFF = "com.watchmyphone.ACTION_SCREEN_OFF"
 
         @Volatile
         var isRunning = false
@@ -46,9 +50,16 @@ class MonitorService : LifecycleService() {
 
     @Inject lateinit var cameraHelper: Camera2Helper
     @Inject lateinit var repo: IntruderRepository
+    @Inject lateinit var usageStatsHelper: UsageStatsHelper
+    @Inject lateinit var usageRepo: AppUsageRepository
+
+
 
     private var screenReceiver: BroadcastReceiver? = null
     private var monitoringJob: Job? = null
+
+    private var sessionId: Long? = null
+    private var lastPackage: String? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -64,24 +75,69 @@ class MonitorService : LifecycleService() {
             ACTION_START_MONITORING -> startMonitoring()
             ACTION_STOP_MONITORING -> stopMonitoring()
             ACTION_CAPTURE -> lifecycleScope.launch(Dispatchers.IO) { captureImage("screen_on") }
-            ACTION_USER_PRESENT -> lifecycleScope.launch(Dispatchers.IO) { captureImage("user_unlocked") }
+            ACTION_USER_PRESENT -> lifecycleScope.launch(Dispatchers.IO) {
+                val id = captureImage("user_unlocked")
+                if (id != null) {
+                    startSession(id)
+                }
+            }
+            ACTION_SCREEN_OFF -> endSession()
         }
         return START_STICKY
     }
+
+    private fun startSession(id: Long) {
+        Log.d("MonitorService", "startSession , sessionId : $id")
+        sessionId = id
+        monitorForegroundApps()
+    }
+
+    private fun endSession() {
+        sessionId = null
+        monitoringJob?.cancel()
+    }
+
+    private fun monitorForegroundApps() {
+        Log.d("MonitorService", "monitorForegroundApps")
+        monitoringJob?.cancel()
+        monitoringJob = lifecycleScope.launch(Dispatchers.IO) {
+            while (sessionId != null) {
+                val packageName = getForegroundApp()
+                if (packageName != lastPackage) {
+                    lastPackage = packageName
+                    sessionId?.let {
+                        if (packageName != null) {
+                            usageRepo.saveUsage(it, packageName)
+                        }
+                    }
+                }
+                delay(2000)
+            }
+        }
+    }
+
+    private fun getForegroundApp(): String? {
+        Log.d("MonitorService", "getForegroundApp")
+        return usageStatsHelper.getForegroundAppPackageName()
+    }
+
+
 
     private fun startMonitoring() {
         if (screenReceiver != null) return
 
         val filter = IntentFilter().apply {
             addAction(Intent.ACTION_SCREEN_ON)
+            addAction(Intent.ACTION_SCREEN_OFF)
             addAction(Intent.ACTION_USER_PRESENT)
         }
 
         screenReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent?.action) {
-                    Intent.ACTION_SCREEN_ON -> triggerCapture(ACTION_CAPTURE)
+                    /*Intent.ACTION_SCREEN_ON -> triggerCapture(ACTION_CAPTURE)*/
                     Intent.ACTION_USER_PRESENT -> triggerCapture(ACTION_USER_PRESENT)
+                    Intent.ACTION_SCREEN_OFF -> triggerCapture(ACTION_SCREEN_OFF)
                 }
             }
         }
@@ -116,16 +172,16 @@ class MonitorService : LifecycleService() {
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    private suspend fun captureImage(reason: String) {
+    private suspend fun captureImage(reason: String): Long? {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED
-        ) return
+        ) return null
 
-        try {
+        return try {
             val dir = File(getExternalFilesDir(null), "intruders").apply { if (!exists()) mkdirs() }
             val fileName = "intruder_${System.currentTimeMillis()}.jpg"
             val path = cameraHelper.captureFrontImage(dir, fileName)
-            repo.saveIntruder(path, reason)
+            repo.saveIntruder(path, reason) // <-- returns inserted ID
         } catch (e: Exception) {
             e.printStackTrace()
             repo.saveIntruder(null, "capture_failed")

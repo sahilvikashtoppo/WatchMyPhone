@@ -1,16 +1,22 @@
 package com.watchmyphone.ui.intruder
 
 import android.content.res.ColorStateList
+import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Build
+import android.os.CancellationSignal
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.watchmyphone.R
-import com.watchmyphone.data.local.IntruderEntity
+import com.watchmyphone.data.local.entity.IntruderEntity
 import com.watchmyphone.databinding.ItemIntruderBinding
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,13 +54,24 @@ class IntruderAdapter(
 
             if (isSelected) {
                 b.ivThumb.let {
-                    it.setImageResource(R.drawable.ic_tick)  // ✔ CUSTOM TICK ICON
+                    it.setImageResource(R.drawable.ic_tick)
                     it.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(b.root.context, android.R.color.white))
                 }
                 changeItemTextAlpha(b, 0.6f)
             } else {
-                if (item.imagePath != null)
-                    b.ivThumb.setImageURI(Uri.parse(item.imagePath))
+                b.ivThumb.imageTintList = null
+
+                if (item.imagePath != null) {
+                    val uri = Uri.parse(item.imagePath)
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        val file = File(item.imagePath)
+                        val bitmap = ThumbnailUtils.createImageThumbnail(
+                            file, Size(200, 200), null)
+                        b.ivThumb.setImageBitmap(bitmap)
+                    } else
+                        b.ivThumb.setImageURI(uri) // fallback
+                }
                 else
                     b.ivThumb.setImageResource(android.R.drawable.sym_def_app_icon)
 

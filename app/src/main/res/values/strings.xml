@@ -34,5 +34,8 @@
     <string name="are_you_sure_you_want_to_delete_selected_intruder_reports">Are you sure you want to delete selected intruder reports?</string>
     <string name="ok">OK</string>
     <string name="are_you_sure_you_want_to_permanently_delete_the_selected_intruder_reports">Are you sure you want to permanently delete the selected intruder reports?</string>
+    <string name="device_unlocked">Device unlocked</string>
+    <string name="show_which_apps_have_been_used">Show which apps have been used</string>
+    <string name="used_apps_will_be_shown_after_the_screen_turns_off">Used apps will be shown after the screen turns off.</string>
 
 </resources>

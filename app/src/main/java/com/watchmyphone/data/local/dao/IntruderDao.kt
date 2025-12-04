@@ -1,8 +1,9 @@
-package com.watchmyphone.data.local
+package com.watchmyphone.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.watchmyphone.data.local.entity.IntruderEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

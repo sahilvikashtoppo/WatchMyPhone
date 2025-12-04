@@ -109,7 +109,7 @@ class IntruderListFragment : Fragment() {
                 parentFragmentManager.beginTransaction()
                     .replace(
                         R.id.container,
-                        IntruderDetailFragment.newInstance(item.imagePath, item.timestamp)
+                        IntruderDetailFragment.newInstance(item.imagePath, item.timestamp, item.id)
                     )
                     .addToBackStack(null)
                     .commit()

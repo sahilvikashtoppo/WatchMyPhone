@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
         binding.root.setBackgroundColor(ContextCompat.getColor(this, android.R.color.black))  // Draw your own black background behind the status bar area
 
         // check usage access - simple open settings flow
-        binding.rootView.setOnClickListener {
+/*        binding.rootView.setOnClickListener {
             startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-        }
+        }*/
 
         // Load fragment only once when the activity starts
         if (savedInstanceState == null) {
