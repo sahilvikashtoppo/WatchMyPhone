@@ -2,14 +2,17 @@
 
 WatchMyPhone is a privacy-focused Android security app that detects unauthorized access attempts. It captures intruder photos, logs unlock attempts and screen activity, tracks which apps were opened by the intruder, and offers a clean dashboard to review incidents. Built with modern Android architecture (MVVM, Hilt, Room, Flow).
 
-<img width="1080" height="1920" alt="WatchMyPhone-Github-ScreenShots" src="https://github.com/user-attachments/assets/3201efbf-f845-44c0-863b-17f3003929bb" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/9dc8c1f1-9224-42df-bfec-73fa60613ef4" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/c21f8526-e986-446f-9bdd-d3c9c1bb1ee7" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/becb0b62-6287-417c-9e5b-42a9456cdb33" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/404e758d-fb40-471a-8982-e193fcee4180" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/762d8e33-d069-472c-890a-aa30ac3df3a1" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/64fa1f09-22fb-42a2-8dbb-06d2f45148cd" />
-<img width="1272" height="2800" alt="image" src="https://github.com/user-attachments/assets/e8dd8bb5-4a2c-4b07-941d-51187ef5ecd3" />
+<div style="display:flex; flex-wrap:wrap; gap:10px;">
+  <img src="https://github.com/user-attachments/assets/3201efbf-f845-44c0-863b-17f3003929bb" width="250"/>
+  <img src="https://github.com/user-attachments/assets/9dc8c1f1-9224-42df-bfec-73fa60613ef4" width="250"/>
+  <img src="https://github.com/user-attachments/assets/c21f8526-e986-446f-9bdd-d3c9c1bb1ee7" width="250"/>
+  <img src="https://github.com/user-attachments/assets/becb0b62-6287-417c-9e5b-42a9456cdb33" width="250"/>
+  <img src="https://github.com/user-attachments/assets/404e758d-fb40-471a-8982-e193fcee4180" width="250"/>
+  <img src="https://github.com/user-attachments/assets/762d8e33-d069-472c-890a-aa30ac3df3a1" width="250"/>
+  <img src="https://github.com/user-attachments/assets/64fa1f09-22fb-42a2-8dbb-06d2f45148cd" width="250"/>
+  <img src="https://github.com/user-attachments/assets/e8dd8bb5-4a2c-4b07-941d-51187ef5ecd3" width="250"/>
+</div>
+
 
 ---
 
