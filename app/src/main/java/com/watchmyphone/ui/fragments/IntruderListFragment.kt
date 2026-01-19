@@ -137,11 +137,12 @@ class IntruderListFragment : Fragment() {
     private fun updateSelectionUI(count: Int) {
 
         if (count > 0) {
-            binding.selectionActions.visibility = View.VISIBLE
-            binding.txtSelectionCount.visibility = View.VISIBLE
+            binding.btnSelectAll.visibility = View.VISIBLE
+            binding.btnDelete.visibility = View.VISIBLE
             binding.txtSelectionCount.text = "$count selected"
         } else {
-            binding.selectionActions.visibility = View.GONE
+            binding.btnSelectAll.visibility = View.GONE
+            binding.btnDelete.visibility = View.GONE
             binding.txtSelectionCount.visibility = View.GONE
         }
     }

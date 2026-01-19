@@ -18,7 +18,6 @@
             android:id="@+id/selectionActions"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
@@ -27,6 +26,7 @@
             <ImageView
                 android:id="@+id/btnSelectAll"
                 android:src="@drawable/ic_select_all"
+                android:visibility="gone"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:padding="4dp"
@@ -35,6 +35,7 @@
             <ImageView
                 android:id="@+id/btnDelete"
                 android:src="@drawable/ic_delete"
+                android:visibility="gone"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:padding="4dp"
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:visibility="gone"
-            android:text="0 selected"
+            android:text="@string/_0_selected"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:layout_gravity="bottom|start"
