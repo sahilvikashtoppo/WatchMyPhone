@@ -1,4 +1,4 @@
-package com.watchmyphone.ui.intruder
+package com.watchmyphone.ui.fragments
 
 import android.Manifest
 import android.content.Intent
@@ -9,12 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +20,7 @@ import com.watchmyphone.R
 import com.watchmyphone.databinding.BottomDeleteConfirmationBinding
 import com.watchmyphone.databinding.FragmentIntruderListBinding
 import com.watchmyphone.service.MonitorService
+import com.watchmyphone.ui.adapters.IntruderAdapter
 import com.watchmyphone.ui.permissions.EssentialPermissionsSheet
 import com.watchmyphone.ui.permissions.OptionalPermissionsSheet
 import com.watchmyphone.viewmodel.IntruderViewModel
@@ -39,22 +36,6 @@ class IntruderListFragment : Fragment() {
     private val intruderViewModel: IntruderViewModel by viewModels()
     private lateinit var adapter: IntruderAdapter
 
-    // Launcher for runtime permission requests
-    private val permissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val allGranted = permissions.all { it.value }
-        if (allGranted) {
-            startMonitorService()
-        } else {
-            Snackbar.make(
-                binding.root,
-                "Camera and foreground service permissions are required.",
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,39 +49,10 @@ class IntruderListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            v.updatePadding(top = statusBarHeight)
-            insets
-        }
-
         setupRecycler()
-        setupSelectionUI()
+        setupListeners()
         observeData()
         observeServiceState()
-
-
-        binding.btnToggle.setOnClickListener {
-            val enabled = intruderViewModel.serviceEnabled.value
-            if (!enabled) {
-                val cameraGranted = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
-                        PackageManager.PERMISSION_GRANTED
-
-                if (!cameraGranted) {
-                    EssentialPermissionsSheet {
-                        startMonitorService()
-                        OptionalPermissionsSheet().show(parentFragmentManager, "optional_permissions")
-                    }.show(parentFragmentManager, "essential_permissions")
-
-                } else {
-                    startMonitorService()
-                    OptionalPermissionsSheet().show(parentFragmentManager, "optional_permissions")
-                }
-            } else {
-                stopMonitorService()
-            }
-        }
-
     }
 
     private fun setupRecycler() {
@@ -149,29 +101,6 @@ class IntruderListFragment : Fragment() {
         }
     }
 
-
-    private fun checkAndRequestPermissions() {
-        val permissions = mutableListOf(
-            Manifest.permission.CAMERA
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            permissions.add(Manifest.permission.FOREGROUND_SERVICE_CAMERA)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-        }
-
-        val notGranted = permissions.filter {
-            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if (notGranted.isNotEmpty()) {
-            permissionLauncher.launch(notGranted.toTypedArray())
-        } else {
-            startMonitorService()
-        }
-    }
-
     private fun startMonitorService() {
         Log.d("MonitorService", "Service Started")
         try {
@@ -217,7 +146,28 @@ class IntruderListFragment : Fragment() {
         }
     }
 
-    private fun setupSelectionUI() {
+    private fun setupListeners() {
+
+        binding.btnToggle.setOnClickListener {
+            val enabled = intruderViewModel.serviceEnabled.value
+            if (!enabled) {
+                val cameraGranted = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) ==
+                        PackageManager.PERMISSION_GRANTED
+
+                if (!cameraGranted) {
+                    EssentialPermissionsSheet {
+                        startMonitorService()
+                        OptionalPermissionsSheet().show(parentFragmentManager, "optional_permissions")
+                    }.show(parentFragmentManager, "essential_permissions")
+
+                } else {
+                    startMonitorService()
+                    OptionalPermissionsSheet().show(parentFragmentManager, "optional_permissions")
+                }
+            } else {
+                stopMonitorService()
+            }
+        }
 
         binding.btnSelectAll.setOnClickListener {
             adapter.toggleSelectAll(intruderViewModel.uiState.value)
@@ -225,6 +175,13 @@ class IntruderListFragment : Fragment() {
 
         binding.btnDelete.setOnClickListener {
             showDeleteConfirmationSheet()
+        }
+
+        binding.btnSettings.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.container, SettingsFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -251,9 +208,6 @@ class IntruderListFragment : Fragment() {
 
         bottomSheet.show()
     }
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

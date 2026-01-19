@@ -37,5 +37,10 @@
     <string name="device_unlocked">Device unlocked</string>
     <string name="show_which_apps_have_been_used">Show which apps have been used</string>
     <string name="used_apps_will_be_shown_after_the_screen_turns_off">Used apps will be shown after the screen turns off.</string>
+    <string name="show_notification_when_app_is_running">Show notification when app is running</string>
+    <string name="back">Back</string>
+    <string name="settings">Settings</string>
+    <string name="info">Info</string>
+    <string name="uninstall_app">Uninstall app</string>
 
 </resources>

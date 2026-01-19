@@ -1,14 +1,12 @@
-package com.watchmyphone.ui.intruder
+package com.watchmyphone.ui.adapters
 
 import android.content.res.ColorStateList
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
-import android.os.CancellationSignal
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter

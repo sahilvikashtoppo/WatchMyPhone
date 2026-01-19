@@ -1,4 +1,4 @@
-package com.watchmyphone.ui.intruder
+package com.watchmyphone.ui.fragments
 
 import android.app.AppOpsManager
 import android.content.Context
@@ -6,16 +6,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Process
 import android.provider.Settings
-import android.view.*
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.watchmyphone.R
 import com.watchmyphone.databinding.FragmentIntruderDetailBinding
+import com.watchmyphone.ui.adapters.UsageAdapter
 import com.watchmyphone.viewmodel.IntruderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -48,11 +48,6 @@ class IntruderDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            v.updatePadding(top = statusBarHeight)
-            insets
-        }
         initializeUsageUI()
         val path = arguments?.getString(ARG_PATH)
         val ts = arguments?.getLong(ARG_TS) ?: 0L
@@ -113,6 +108,10 @@ class IntruderDetailFragment : Fragment() {
                     enableUsageUI()
                 }
             }
+        }
+
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
         // Auto-update UI if permission already granted

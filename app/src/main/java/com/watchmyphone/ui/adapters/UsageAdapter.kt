@@ -1,4 +1,4 @@
-package com.watchmyphone.ui.intruder
+package com.watchmyphone.ui.adapters
 
 import android.content.pm.PackageManager
 import android.view.LayoutInflater

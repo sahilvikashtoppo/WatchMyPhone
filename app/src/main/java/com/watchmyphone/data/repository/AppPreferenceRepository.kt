@@ -14,4 +14,10 @@ class AppPreferenceRepository @Inject constructor(context: Context) {
     suspend fun setServiceEnabled(enabled: Boolean) {
         preferences.setServiceEnabled(enabled)
     }
+
+    val notificationEnabled: Flow<Boolean> get() = preferences.notificationEnabled
+
+    suspend fun setNotificationEnabled(enabled: Boolean) {
+        preferences.setNotificationEnabled(enabled)
+    }
 }

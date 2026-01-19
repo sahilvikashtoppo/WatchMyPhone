@@ -174,7 +174,7 @@ class Camera2Helper @Inject constructor(private val context: Context) {
             set(CaptureRequest.JPEG_ORIENTATION, orientation)
         }.build()
 
-        Log.d(TAG, "📸 Capturing with JPEG_ORIENTATION=$orientation")
+        Log.d(TAG, "Capturing with JPEG_ORIENTATION=$orientation")
 
         reader.setOnImageAvailableListener({ r ->
             val image: Image? = try { r.acquireNextImage() } catch (_: Exception) { r.acquireLatestImage() }
