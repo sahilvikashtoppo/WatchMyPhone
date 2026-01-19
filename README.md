@@ -2,6 +2,10 @@
 
 WatchMyPhone is a privacy-focused Android security app that detects unauthorized access attempts. It captures intruder photos, logs unlock attempts and screen activity, tracks which apps were opened by the intruder, and offers a clean dashboard to review incidents. Built with modern Android architecture (MVVM, Hilt, Room, Flow).
 
+You can download the latest APK here:  
+[Download WatchMyPhone APK](https://github.com/sahilvikashtoppo/WatchMyPhone/releases/latest)
+
+
 <div style="display:flex; flex-wrap:wrap; gap:10px;">
   <img src="https://github.com/user-attachments/assets/3201efbf-f845-44c0-863b-17f3003929bb" width="250"/>
   <img src="https://github.com/user-attachments/assets/9dc8c1f1-9224-42df-bfec-73fa60613ef4" width="250"/>
